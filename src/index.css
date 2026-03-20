@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fire-orange: #FF4500;
+  --color-dark-blue: #001F3F;
+  --color-scout-birr: #FFD700;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-dark-blue font-sans;
+  }
+}
+
+.coin-flow-animation {
+  background: radial-gradient(circle at center, rgba(255, 69, 0, 0.1) 0%, transparent 70%);
+}
+
+.glass-card {
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
+}
