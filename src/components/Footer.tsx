@@ -30,7 +30,7 @@ export function Footer() {
             <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Ecosystem</h4>
             <ul className="space-y-4 text-sm text-zinc-500">
               <li><a href="#" className="hover:text-white transition-colors">Smart Market</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Adama Scout</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Zemen Scout</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Runner Link</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Blooming Heart</a></li>
             </ul>
@@ -49,9 +49,9 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Contact</h4>
             <ul className="space-y-4 text-sm text-zinc-500">
-              <li className="flex items-center gap-3"><Mail size={16} /> info@zemen.city</li>
-              <li className="flex items-center gap-3"><Phone size={16} /> +251 911 000 000</li>
-              <li className="flex items-center gap-3"><MapPin size={16} /> Addis Ababa, Ethiopia</li>
+              <li className="flex items-center gap-3"><Mail size={16} /> esmielferehan@gmail.com</li>
+              <li className="flex items-center gap-3"><Phone size={16} /> +251904276965 , +251947287967</li>
+              <li className="flex items-center gap-3"><MapPin size={16} /> assosa , ethiopia</li>
             </ul>
           </div>
         </div>

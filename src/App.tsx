@@ -29,7 +29,7 @@ import { Footer } from './components/Footer';
 
 const APPS = [
   { id: 'market', name: 'Smart Market', description: 'Browse and buy products from local shops using SBR.', icon: 'ShoppingCart', color: 'text-orange-500' },
-  { id: 'scout', name: 'Adama Scout', description: 'Collect city data, verify locations, and earn SBR rewards.', icon: 'MapPin', color: 'text-orange-500' },
+  { id: 'scout', name: 'Zemen Scout', description: 'Collect city data, verify locations, and earn SBR rewards.', icon: 'MapPin', color: 'text-orange-500' },
   { id: 'runner', name: 'Runner Link', description: 'Real-time logistics and delivery powered by local runners.', icon: 'Truck', color: 'text-orange-500' },
   { id: 'heart', name: 'Blooming Heart', description: 'Support social impact projects and track your donations.', icon: 'Heart', color: 'text-red-500' },
   { id: 'farm', name: 'Farm Link', description: 'Direct marketplace connecting farmers to urban markets.', icon: 'Sprout', color: 'text-emerald-500' },

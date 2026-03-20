@@ -14,7 +14,7 @@ import {
 
 const PHASES = [
   { phase: 1, title: 'Smart Market', icon: ShoppingCart, color: 'text-orange-500', bg: 'bg-orange-500/10' },
-  { phase: 2, title: 'Adama Scout', icon: MapPin, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+  { phase: 2, title: 'Zemen Scout', icon: MapPin, color: 'text-orange-500', bg: 'bg-orange-500/10' },
   { phase: 3, title: 'Runner Link', icon: Truck, color: 'text-orange-500', bg: 'bg-orange-500/10' },
   { phase: 4, title: 'Blooming Heart', icon: Heart, color: 'text-red-500', bg: 'bg-red-500/10' },
   { phase: 5, title: 'Farm Link', icon: Sprout, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
