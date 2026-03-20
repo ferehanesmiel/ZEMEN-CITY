@@ -1,59 +1,63 @@
+import React from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle2, Circle, ArrowRight } from 'lucide-react';
+import { 
+  ShoppingCart, 
+  MapPin, 
+  Truck, 
+  Heart, 
+  Sprout, 
+  Stethoscope, 
+  Wrench,
+  Globe,
+  CheckCircle2
+} from 'lucide-react';
 
 const PHASES = [
-  { phase: 'Phase 1', title: 'Smart Market', status: 'completed', desc: 'E-commerce platform launch with local shop integration.' },
-  { phase: 'Phase 2', title: 'Adama Scout', status: 'completed', desc: 'City data crowdsourcing and verification system.' },
-  { phase: 'Phase 3', title: 'Runner Link', status: 'current', desc: 'Logistics and delivery network for on-demand services.' },
-  { phase: 'Phase 4', title: 'Blooming Heart', status: 'upcoming', desc: 'Social impact and transparent donation tracking.' },
-  { phase: 'Phase 5', title: 'Full SBR Ecosystem', status: 'upcoming', desc: 'Centralized digital currency across all apps.' },
-  { phase: 'Phase 6', title: 'Expansion', status: 'upcoming', desc: 'Scaling the Zemen ecosystem to other major cities.' },
+  { phase: 1, title: 'Smart Market', icon: ShoppingCart, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+  { phase: 2, title: 'Adama Scout', icon: MapPin, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+  { phase: 3, title: 'Runner Link', icon: Truck, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+  { phase: 4, title: 'Blooming Heart', icon: Heart, color: 'text-red-500', bg: 'bg-red-500/10' },
+  { phase: 5, title: 'Farm Link', icon: Sprout, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+  { phase: 6, title: 'Pharma Link', icon: Stethoscope, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { phase: 7, title: 'Service Hub', icon: Wrench, color: 'text-yellow-500', bg: 'bg-yellow-500/10' },
+  { phase: 8, title: 'National Expansion', icon: Globe, color: 'text-blue-400', bg: 'bg-blue-400/10' },
 ];
 
-export default function Roadmap() {
+export function Roadmap() {
   return (
-    <div className="relative">
-      {/* Vertical Line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-dark-blue/10 hidden lg:block" />
-
-      <div className="space-y-12 lg:space-y-0">
-        {PHASES.map((phase, i) => (
-          <div key={i} className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-0 ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-            {/* Content */}
-            <motion.div
-              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className={`lg:w-1/2 p-8 bg-white rounded-3xl shadow-xl shadow-dark-blue/5 border border-dark-blue/5 relative z-10 ${i % 2 === 0 ? 'lg:mr-12' : 'lg:ml-12'}`}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-fire-orange font-black uppercase tracking-widest text-xs">{phase.phase}</span>
-                {phase.status === 'completed' ? (
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                ) : phase.status === 'current' ? (
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    className="w-3 h-3 bg-fire-orange rounded-full"
-                  />
-                ) : (
-                  <Circle className="w-5 h-5 text-dark-blue/10" />
-                )}
+    <div className="relative space-y-8">
+      <div className="absolute left-8 top-4 bottom-4 w-px bg-zinc-800" />
+      
+      {PHASES.map((phase, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.1 }}
+          className="relative flex items-center gap-6 group"
+        >
+          <div className={`relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center ${phase.bg} ${phase.color} border border-white/5 group-hover:border-white/20 transition-all`}>
+            <phase.icon size={28} />
+            {i < 3 && (
+              <div className="absolute -top-1 -right-1 bg-emerald-500 text-white rounded-full p-0.5 shadow-lg">
+                <CheckCircle2 size={12} />
               </div>
-              <h4 className="text-2xl font-black text-dark-blue mb-4 tracking-tight">{phase.title}</h4>
-              <p className="text-dark-blue/60 leading-relaxed">{phase.desc}</p>
-            </motion.div>
-
-            {/* Dot on line */}
-            <div className="hidden lg:flex w-12 h-12 bg-dark-blue rounded-full items-center justify-center z-20 shadow-xl border-4 border-white">
-              <div className={`w-4 h-4 rounded-full ${phase.status === 'completed' ? 'bg-green-500' : phase.status === 'current' ? 'bg-fire-orange' : 'bg-white/20'}`} />
-            </div>
-
-            {/* Spacer for other side */}
-            <div className="hidden lg:block lg:w-1/2" />
+            )}
           </div>
-        ))}
-      </div>
+          
+          <div className="flex-1 p-6 bg-zinc-900/50 border border-white/5 rounded-2xl group-hover:border-white/10 transition-all">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Phase {phase.phase}</span>
+              {i < 3 && <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Completed</span>}
+            </div>
+            <h4 className="text-lg font-bold text-white">{phase.title}</h4>
+            <p className="text-sm text-zinc-500 mt-1">
+              {i < 3 ? 'Fully integrated and operational' : 'Development and integration in progress'}
+            </p>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }

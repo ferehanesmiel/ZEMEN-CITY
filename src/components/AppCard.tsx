@@ -1,53 +1,44 @@
+import React from 'react';
 import { motion } from 'motion/react';
-import * as LucideIcons from 'lucide-react';
-import { AppInfo } from '../types';
+import * as Icons from 'lucide-react';
 
 interface AppCardProps {
-  app: AppInfo;
-  index: number;
-  key?: string | number;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  onClick: () => void;
+  isActive?: boolean;
 }
 
-export default function AppCard({ app, index }: AppCardProps) {
-  // @ts-ignore
-  const Icon = LucideIcons[app.icon] || LucideIcons.HelpCircle;
+export function AppCard({ name, description, icon, color, onClick, isActive }: AppCardProps) {
+  const IconComponent = (Icons as any)[icon];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      whileHover={{ y: -10 }}
-      className="group relative glass-card rounded-3xl p-8 overflow-hidden"
+    <motion.button
+      whileHover={{ scale: 1.02, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`relative w-full p-6 text-left rounded-2xl border transition-all duration-300 ${
+        isActive 
+          ? 'bg-zinc-900 border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.15)]' 
+          : 'bg-zinc-900/50 border-white/5 hover:border-white/10'
+      }`}
     >
-      <div
-        className="absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full opacity-10 transition-transform group-hover:scale-150"
-        style={{ backgroundColor: app.color }}
-      />
-      
-      <div className="flex justify-between items-start mb-8">
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
-          style={{ backgroundColor: app.color }}
-        >
-          <Icon className="w-8 h-8 text-white" />
-        </div>
-        <span className={`text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border ${app.category === 'core' ? 'border-fire-orange text-fire-orange' : 'border-gold-accent text-gold-accent'}`}>
-          {app.category}
-        </span>
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${color} bg-opacity-10`}>
+        {IconComponent && <IconComponent className={`w-6 h-6 ${color.replace('bg-', 'text-')}`} />}
       </div>
-
-      <h3 className="text-2xl font-black mb-4 tracking-tight text-white group-hover:text-fire-orange transition-colors uppercase">{app.name}</h3>
-      <p className="text-white/60 leading-relaxed mb-8 text-sm font-medium">{app.description}</p>
+      <h3 className="text-lg font-semibold text-white mb-2">{name}</h3>
+      <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
       
-      <motion.button
-        whileHover={{ x: 5 }}
-        className="flex items-center gap-2 text-fire-orange font-black text-xs uppercase tracking-[0.2em] group/btn"
-      >
-        Launch Module
-        <LucideIcons.ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-      </motion.button>
-    </motion.div>
+      {isActive && (
+        <motion.div
+          layoutId="active-glow"
+          className="absolute inset-0 rounded-2xl bg-orange-500/5 -z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        />
+      )}
+    </motion.button>
   );
 }

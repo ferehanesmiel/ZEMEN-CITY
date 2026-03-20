@@ -1,5 +1,7 @@
 {
-  "name": "ZEMEN DIGITAL CITY",
-  "description": "A unified digital platform connecting city discovery, e-commerce, delivery, and social impact powered by SBR digital currency.",
-  "requestFramePermissions": []
+  "name": "Zemen Digital City",
+  "description": "A unified digital city ecosystem connecting commerce, logistics, agriculture, healthcare, and social impact through the SBR digital currency.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
 }

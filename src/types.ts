@@ -1,27 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-export interface AppInfo {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  color: string;
-  category: 'core' | 'expansion';
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  shop: string;
-  location: string;
-  image: string;
-  type: 'market' | 'farm' | 'pharma' | 'service';
-}
-
 export interface Transaction {
   id: string;
   type: 'earn' | 'spend' | 'donate' | 'recycle';
@@ -30,8 +6,28 @@ export interface Transaction {
   timestamp: string;
 }
 
-export interface Statistic {
-  label: string;
-  value: string;
+export interface AppInfo {
+  id: string;
+  name: string;
+  description: string;
   icon: string;
+  color: string;
+  category: 'core' | 'service' | 'impact';
+}
+
+export interface DemoState {
+  balance: number;
+  notifications: Notification[];
+  transactions: Transaction[];
+  activeRunners: number;
+  totalDonations: number;
+}
+
+export type NotificationType = 'success' | 'info' | 'reward' | 'payment';
+
+export interface Notification {
+  id: string;
+  message: string;
+  type: NotificationType;
+  timestamp: Date;
 }

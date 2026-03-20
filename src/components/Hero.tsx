@@ -1,153 +1,106 @@
+import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Play, TrendingUp, Globe, ShoppingBag, Truck, Heart, Search } from 'lucide-react';
+import { Globe, ArrowRight, Zap, Shield, Users, Coins } from 'lucide-react';
 
-export default function Hero() {
+export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-dark-bg">
-      {/* Background Animation Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-fire-orange/10 blur-[120px] -mr-96 -mt-96 rounded-full animate-pulse-glow" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 blur-[100px] -ml-72 -mb-72 rounded-full animate-pulse-glow" />
-        
-        {/* Animated Grid */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          {/* Text Content */}
-          <div className="lg:col-span-7 space-y-10">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-fire-orange text-xs font-black uppercase tracking-[0.3em]"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fire-orange opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-fire-orange"></span>
-              </span>
-              The Operating System for Africa
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85]"
-            >
-              ZEMEN <br />
-              <span className="text-fire-orange drop-shadow-[0_0_15px_rgba(255,106,0,0.5)]">DIGITAL</span> <br />
-              CITY
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-white/60 max-w-xl leading-relaxed font-bold italic"
-            >
-              Digitizing Commerce, Services, Agriculture & Kindness.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-6"
-            >
-              <button className="bg-fire-orange hover:bg-fire-orange/90 text-white font-black px-10 py-5 rounded-2xl text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-fire-orange/20 group glow-button">
-                Explore Ecosystem
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="bg-white/5 hover:bg-white/10 text-white font-black px-10 py-5 rounded-2xl text-lg flex items-center justify-center gap-3 transition-all border border-white/10 backdrop-blur-md glow-button">
-                <Play className="w-5 h-5 fill-white" />
-                Live Demo
-              </button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex items-center gap-8 pt-8 border-t border-white/5"
-            >
-              <div className="flex -space-x-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <img
-                    key={i}
-                    src={`https://i.pravatar.cc/100?img=${i + 20}`}
-                    alt="User"
-                    className="w-12 h-12 rounded-full border-4 border-dark-bg"
-                  />
-                ))}
-                <div className="w-12 h-12 rounded-full border-4 border-dark-bg bg-fire-orange flex items-center justify-center text-white font-black text-xs">
-                  +50k
+    <div className="relative pt-32 pb-20 overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-orange-500/10 blur-[120px] rounded-full -z-10" />
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-blue-500/5 blur-[100px] rounded-full -z-10" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest"
+          >
+            <Zap size={14} />
+            <span>The Operating System for Africa</span>
+          </motion.div>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-8xl font-black text-white tracking-tight leading-[0.9]"
+          >
+            ZEMEN <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+              DIGITAL CITY
+            </span>
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-2xl mx-auto text-lg text-zinc-400 leading-relaxed"
+          >
+            A unified digital ecosystem connecting people, businesses, and logistics. 
+            Powered by SBR, the future of traceable digital currency.
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <button className="w-full sm:w-auto px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_0_30px_rgba(249,115,22,0.3)]">
+              <span>Explore Ecosystem</span>
+              <ArrowRight size={20} />
+            </button>
+            <button className="w-full sm:w-auto px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-2xl border border-white/5 transition-all">
+              View Whitepaper
+            </button>
+          </motion.div>
+          
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="pt-12 grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            {[
+              { label: 'Active Users', value: '125K+', icon: Users },
+              { label: 'SBR Circulating', value: '4.2M', icon: Coins },
+              { label: 'Cities Covered', value: '12', icon: Globe },
+              { label: 'Secure Nodes', value: '850', icon: Shield },
+            ].map((stat, i) => (
+              <div key={i} className="space-y-1">
+                <div className="flex items-center justify-center gap-2 text-zinc-500 mb-1">
+                  <stat.icon size={14} />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">{stat.label}</span>
                 </div>
+                <p className="text-2xl font-black text-white tracking-tight">{stat.value}</p>
               </div>
-              <p className="text-white/40 text-sm font-bold">
-                Trusted by <span className="text-white font-black">50,000+</span> users <br />
-                across Adama City.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Visual Element: Floating Cards/Coins */}
-          <div className="lg:col-span-5 relative hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="relative"
-            >
-              {/* Central Coin */}
-              <motion.div
-                className="w-64 h-64 bg-gradient-to-br from-fire-orange to-gold-accent rounded-full flex items-center justify-center shadow-[0_0_100px_rgba(255,106,0,0.4)] relative z-20 mx-auto animate-float"
-              >
-                <div className="w-48 h-48 bg-black/20 rounded-full border-4 border-white/20 flex items-center justify-center backdrop-blur-sm">
-                  <span className="text-7xl font-black text-white tracking-tighter drop-shadow-lg">SBR</span>
-                </div>
-              </motion.div>
-
-              {/* Floating App Icons */}
-              {[
-                { icon: ShoppingBag, color: 'bg-blue-500', pos: 'top-0 left-0', delay: 0 },
-                { icon: Truck, color: 'bg-green-500', pos: 'top-0 right-0', delay: 1 },
-                { icon: Heart, color: 'bg-red-500', pos: 'bottom-0 left-0', delay: 2 },
-                { icon: Search, color: 'bg-purple-500', pos: 'bottom-0 right-0', delay: 3 },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ y: [0, 15, 0], x: [0, 10, 0] }}
-                  transition={{ repeat: Infinity, duration: 3, delay: item.delay, ease: 'easeInOut' }}
-                  className={`absolute ${item.pos} w-20 h-20 ${item.color} rounded-2xl flex items-center justify-center shadow-2xl z-30 border border-white/20 backdrop-blur-md`}
-                >
-                  <item.icon className="w-10 h-10 text-white" />
-                </motion.div>
-              ))}
-
-              {/* Orbiting Particles */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
-                className="absolute inset-0 -z-10"
-              >
-                {[...Array(12)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-2 h-2 bg-fire-orange rounded-full shadow-[0_0_10px_rgba(255,106,0,1)]"
-                    style={{
-                      top: '50%',
-                      left: '50%',
-                      transform: `rotate(${i * 30}deg) translate(220px)`,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
+            ))}
+          </motion.div>
+        </div>
+        
+        {/* Animated Coin */}
+        <div className="mt-20 relative flex justify-center">
+          <motion.div
+            animate={{ 
+              rotateY: [0, 360],
+              y: [0, -20, 0]
+            }}
+            transition={{ 
+              rotateY: { duration: 10, repeat: Infinity, ease: "linear" },
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
+            className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 p-1 shadow-[0_0_100px_rgba(249,115,22,0.4)] flex items-center justify-center"
+            style={{ perspective: 1000 }}
+          >
+            <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center border-4 border-orange-500/50">
+              <span className="text-4xl md:text-6xl font-black text-orange-500 tracking-tighter">SBR</span>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

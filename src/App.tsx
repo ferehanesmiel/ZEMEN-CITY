@@ -1,281 +1,217 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  ShoppingCart, 
+  MapPin, 
+  Truck, 
+  Heart, 
+  Sprout, 
+  Stethoscope, 
+  Wrench,
+  LayoutDashboard,
+  TrendingUp,
+  BarChart3,
+  Users,
+  Zap,
+  Shield,
+  Coins
+} from 'lucide-react';
+import { DemoProvider } from './context/DemoContext';
+import { ToastProvider } from './context/ToastContext';
+import { Navbar } from './components/Navbar';
+import { Hero } from './components/Hero';
+import { AppCard } from './components/AppCard';
+import { WalletDisplay } from './components/WalletDisplay';
+import { DemoSimulation } from './components/DemoSimulation';
+import { BusinessModel } from './components/BusinessModel';
+import { Roadmap } from './components/Roadmap';
+import { Footer } from './components/Footer';
 
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import SectionHeader from './components/SectionHeader';
-import AppCard from './components/AppCard';
-import DemoSimulation from './components/DemoSimulation';
-import WalletDisplay from './components/WalletDisplay';
-import BusinessModel from './components/BusinessModel';
-import ImpactStats from './components/ImpactStats';
-import Roadmap from './components/Roadmap';
-import InvestorSection from './components/InvestorSection';
-import AdminDashboard from './components/AdminDashboard';
-import Footer from './components/Footer';
-import { AppInfo } from './types';
-import { motion } from 'motion/react';
-import { ArrowRight, Wallet, TrendingUp, Heart, Recycle, ShoppingBag, Truck, Search, Globe } from 'lucide-react';
-
-const ECOSYSTEM_APPS: AppInfo[] = [
-  {
-    id: 'market',
-    name: 'Smart Market',
-    description: 'The future of e-commerce. Shop from local vendors with instant SBR payments.',
-    icon: 'ShoppingBag',
-    color: '#ff6a00',
-    category: 'core'
-  },
-  {
-    id: 'scout',
-    name: 'Adama Scout',
-    description: 'City discovery and real-time data. Find the best spots and navigate like a local.',
-    icon: 'Search',
-    color: '#121826',
-    category: 'core'
-  },
-  {
-    id: 'runner',
-    name: 'Runner Link',
-    description: 'Ultra-fast logistics and delivery. Track your orders in real-time across the city.',
-    icon: 'Truck',
-    color: '#ffaa00',
-    category: 'core'
-  },
-  {
-    id: 'heart',
-    name: 'Blooming Heart',
-    description: 'Social impact and donations. Direct support for community projects using SBR.',
-    icon: 'Heart',
-    color: '#ff4444',
-    category: 'core'
-  },
-  {
-    id: 'farm',
-    name: 'Farm Link',
-    description: 'Direct-from-farm marketplace. Connecting local agriculture with urban demand.',
-    icon: 'Sprout',
-    color: '#10b981',
-    category: 'expansion'
-  },
-  {
-    id: 'pharma',
-    name: 'Pharma Link',
-    description: 'Medicine finder and pharmacy network. Essential healthcare at your fingertips.',
-    icon: 'Stethoscope',
-    color: '#3b82f6',
-    category: 'expansion'
-  },
-  {
-    id: 'services',
-    name: 'Service Hub',
-    description: 'Local services marketplace. From repairs to professional consulting.',
-    icon: 'Wrench',
-    color: '#8b5cf6',
-    category: 'expansion'
-  }
+const APPS = [
+  { id: 'market', name: 'Smart Market', description: 'Browse and buy products from local shops using SBR.', icon: 'ShoppingCart', color: 'text-orange-500' },
+  { id: 'scout', name: 'Adama Scout', description: 'Collect city data, verify locations, and earn SBR rewards.', icon: 'MapPin', color: 'text-orange-500' },
+  { id: 'runner', name: 'Runner Link', description: 'Real-time logistics and delivery powered by local runners.', icon: 'Truck', color: 'text-orange-500' },
+  { id: 'heart', name: 'Blooming Heart', description: 'Support social impact projects and track your donations.', icon: 'Heart', color: 'text-red-500' },
+  { id: 'farm', name: 'Farm Link', description: 'Direct marketplace connecting farmers to urban markets.', icon: 'Sprout', color: 'text-emerald-500' },
+  { id: 'pharma', name: 'Pharma Link', description: 'Access essential medicines and healthcare services.', icon: 'Stethoscope', color: 'text-blue-500' },
+  { id: 'hub', name: 'Service Hub', description: 'Book verified local service providers and professionals.', icon: 'Wrench', color: 'text-yellow-500' },
 ];
 
-export default function App() {
+function App() {
+  const [activeApp, setActiveApp] = useState('market');
+
   return (
-    <div className="min-h-screen bg-dark-bg text-white overflow-x-hidden">
-      <Navbar />
-      
-      <main>
-        {/* Hero Section */}
-        <Hero />
+    <DemoProvider>
+      <ToastProvider>
+        <div className="min-h-screen bg-black text-zinc-400 font-sans selection:bg-orange-500 selection:text-white">
+          <Navbar />
+          
+          <main>
+            <Hero />
 
-        {/* Ecosystem Overview */}
-        <section id="ecosystem" className="py-32 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="The Zemen Ecosystem"
-              title="Seven Apps, One Unified Economy"
-              description="Our modular platform connects every aspect of city life, from commerce to social impact, all powered by a single digital currency."
-            />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
-              {ECOSYSTEM_APPS.map((app, index) => (
-                <AppCard key={app.id} app={app} index={index} />
-              ))}
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-20 p-8 bg-dark-blue rounded-[2.5rem] text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-dark-blue/20"
-            >
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-fire-orange rounded-2xl flex items-center justify-center shadow-lg shadow-fire-orange/20">
-                  <Wallet className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-2xl font-black tracking-tight">Central SBR Wallet</h4>
-                  <p className="text-white/60">The heartbeat of the Zemen Digital City economy.</p>
-                </div>
-              </div>
-              <button className="bg-white text-dark-blue font-black px-8 py-4 rounded-2xl transition-all transform hover:scale-105 hover:bg-fire-orange hover:text-white">
-                Learn about SBR
-              </button>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Live Demo Section */}
-        <section id="demo" className="py-32 bg-dark-blue relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              light
-              subtitle="Experience the Future"
-              title="Interactive Ecosystem Demo"
-              description="See how SBR flows between users, shops, and runners in real-time. Try the simulation below."
-            />
-            <DemoSimulation />
-          </div>
-        </section>
-
-        {/* Wallet System */}
-        <section id="wallet" className="py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="SBR Digital Currency"
-              title="The Smart Wallet System"
-              description="Earn, spend, and donate with total transparency. Every transaction is traceable and contributes to the city's growth."
-            />
-            <WalletDisplay />
-
-            {/* Wallet Flow Diagram */}
-            <div className="mt-32 text-center">
-              <h4 className="text-2xl font-black text-dark-blue mb-16 tracking-tight uppercase tracking-widest text-sm">The Circular SBR Economy</h4>
-              <div className="flex flex-wrap justify-center gap-12 md:gap-24">
-                {[
-                  { icon: TrendingUp, label: 'Earn', color: 'bg-green-500' },
-                  { icon: ShoppingBag, label: 'Spend', color: 'bg-blue-500' },
-                  { icon: Truck, label: 'Deliver', color: 'bg-purple-500' },
-                  { icon: Heart, label: 'Donate', color: 'bg-red-500' },
-                  { icon: Recycle, label: 'Recycle', color: 'bg-orange-500' },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="relative group"
-                  >
-                    <div className={`w-20 h-20 ${item.color} rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform relative z-10`}>
-                      <item.icon className="w-10 h-10 text-white" />
+            {/* Ecosystem Section */}
+            <section className="py-24 bg-zinc-950/50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row gap-12">
+                  {/* Left: App Selection */}
+                  <div className="w-full md:w-1/3 space-y-4">
+                    <div className="mb-8">
+                      <h2 className="text-3xl font-black text-white mb-2 tracking-tight">ECOSYSTEM</h2>
+                      <p className="text-sm text-zinc-500">Select a module to explore the digital city simulation.</p>
                     </div>
-                    <p className="mt-4 font-black text-dark-blue tracking-tight">{item.label}</p>
-                    {i < 4 && (
-                      <div className="hidden lg:block absolute top-10 left-full w-24 h-0.5 bg-dark-blue/10 -z-10" />
-                    )}
-                  </motion.div>
-                ))}
+                    <div className="grid grid-cols-1 gap-3">
+                      {APPS.map((app) => (
+                        <React.Fragment key={app.id}>
+                          <AppCard
+                            name={app.name}
+                            description={app.description}
+                            icon={app.icon}
+                            color={app.color}
+                            isActive={activeApp === app.id}
+                            onClick={() => setActiveApp(app.id)}
+                          />
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right: Simulation & Wallet */}
+                  <div className="flex-1 space-y-8">
+                    <div className="sticky top-24 space-y-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                              <Zap size={20} className="text-orange-500" />
+                              Live Simulation
+                            </h3>
+                            <div className="flex items-center gap-2 px-3 py-1 bg-orange-500/10 text-orange-500 text-[10px] font-bold uppercase tracking-widest rounded-full border border-orange-500/20">
+                              Demo Mode Active
+                            </div>
+                          </div>
+                          <DemoSimulation activeApp={activeApp} />
+                        </div>
+                        <WalletDisplay />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        {/* Business Model */}
-        <section className="py-32 bg-deep-blue/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="Sustainable Growth"
-              title="Our Business Model"
-              description="A diversified revenue strategy built on subscriptions, commissions, and data-driven insights."
-            />
-            <BusinessModel />
-          </div>
-        </section>
-
-        {/* Impact Section */}
-        <section className="py-32 bg-dark-blue relative overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-          </div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <SectionHeader 
-              light
-              subtitle="Social Impact"
-              title="Digitizing for Good"
-              description="We measure our success not just in transactions, but in the positive change we bring to the community."
-            />
-            <ImpactStats />
-          </div>
-        </section>
-
-        {/* Roadmap */}
-        <section className="py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="The Journey"
-              title="Strategic Roadmap"
-              description="Our clear vision for scaling the Zemen ecosystem across Ethiopia and beyond."
-            />
-            <Roadmap />
-          </div>
-        </section>
-
-        {/* Investor Section */}
-        <section id="investors" className="py-32 bg-deep-blue/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="Investment"
-              title="Investor Opportunity"
-              description="Be part of the digital transformation of African cities. We are currently raising our seed round."
-            />
-            <InvestorSection />
-          </div>
-        </section>
-
-        {/* Admin Dashboard Demo */}
-        <section className="py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader 
-              subtitle="Transparency"
-              title="Admin Control Center"
-              description="A glimpse into the real-time monitoring and management tools that power the Zemen ecosystem."
-            />
-            <AdminDashboard />
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-32 bg-fire-orange relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/5" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center text-white">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="space-y-10"
-            >
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight">
-                Ready to Digitizing <br /> Your City?
-              </h2>
-              <p className="text-xl text-white/80 max-w-2xl mx-auto font-medium">
-                Join thousands of users and businesses already thriving in the Zemen Digital City ecosystem.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <button className="bg-dark-blue hover:bg-dark-blue/90 text-white font-black px-12 py-5 rounded-2xl text-xl transition-all transform hover:scale-105 shadow-2xl shadow-black/20">
-                  Get Started Now
-                </button>
-                <button className="bg-white text-fire-orange font-black px-12 py-5 rounded-2xl text-xl transition-all transform hover:scale-105 shadow-2xl shadow-white/20">
-                  Contact Sales
-                </button>
+            {/* Business Model Section */}
+            <section className="py-24 border-t border-white/5">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16 space-y-4">
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">BUSINESS MODEL</h2>
+                  <p className="max-w-2xl mx-auto text-zinc-500">A sustainable, multi-stream revenue engine designed for scalability across Africa.</p>
+                </div>
+                <BusinessModel />
               </div>
-            </motion.div>
-          </div>
-        </section>
-      </main>
+            </section>
 
-      <Footer />
-    </div>
+            {/* Roadmap Section */}
+            <section className="py-24 bg-zinc-950/50 border-t border-white/5">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                  <div className="space-y-8 sticky top-24">
+                    <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">PROJECT ROADMAP</h2>
+                    <p className="text-lg text-zinc-500 leading-relaxed">
+                      Our phased approach ensures stability and scalability. We are currently in Phase 3, 
+                      expanding our logistics network across major urban centers.
+                    </p>
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-2xl">
+                        <p className="text-3xl font-black text-white mb-1">8</p>
+                        <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Strategic Phases</p>
+                      </div>
+                      <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-2xl">
+                        <p className="text-3xl font-black text-orange-500 mb-1">3</p>
+                        <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Phases Completed</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Roadmap />
+                </div>
+              </div>
+            </section>
+
+            {/* Admin Preview Section */}
+            <section className="py-24 border-t border-white/5">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="bg-gradient-to-br from-zinc-900 to-black border border-white/5 rounded-[40px] p-12 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-12 opacity-5">
+                    <LayoutDashboard size={300} />
+                  </div>
+                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-6">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 text-blue-500 text-[10px] font-bold uppercase tracking-widest rounded-full border border-blue-500/20">
+                        Admin Controls
+                      </div>
+                      <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">CITY OPERATING SYSTEM</h2>
+                      <p className="text-zinc-500 leading-relaxed">
+                        Centralized monitoring for city officials and platform administrators. 
+                        Track real-time logistics, market health, and social impact metrics.
+                      </p>
+                      <ul className="space-y-4">
+                        {[
+                          { text: 'Real-time SBR Transaction Monitoring', icon: BarChart3 },
+                          { text: 'Logistics & Runner Network Management', icon: Truck },
+                          { text: 'Shop & Service Provider Verification', icon: Shield },
+                          { text: 'Social Impact & Donation Tracking', icon: Heart },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-3 text-sm text-white/80">
+                            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-orange-500">
+                              <item.icon size={16} />
+                            </div>
+                            {item.text}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-8 bg-black/40 backdrop-blur-md border border-white/5 rounded-3xl space-y-2">
+                        <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Network Load</p>
+                        <p className="text-3xl font-black text-white">84%</p>
+                        <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+                          <div className="w-[84%] h-full bg-orange-500" />
+                        </div>
+                      </div>
+                      <div className="p-8 bg-black/40 backdrop-blur-md border border-white/5 rounded-3xl space-y-2">
+                        <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Active Nodes</p>
+                        <p className="text-3xl font-black text-emerald-500">Online</p>
+                        <div className="flex gap-1">
+                          {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-2 h-2 rounded-full bg-emerald-500" />)}
+                        </div>
+                      </div>
+                      <div className="col-span-2 p-8 bg-black/40 backdrop-blur-md border border-white/5 rounded-3xl space-y-4">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">City Growth Rate</p>
+                          <TrendingUp size={16} className="text-emerald-500" />
+                        </div>
+                        <div className="flex items-end gap-2 h-20">
+                          {[40, 60, 45, 70, 85, 65, 90].map((h, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ height: 0 }}
+                              animate={{ height: `${h}%` }}
+                              className="flex-1 bg-orange-500/20 border-t-2 border-orange-500 rounded-t-sm"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </div>
+      </ToastProvider>
+    </DemoProvider>
   );
 }
+
+export default App;
