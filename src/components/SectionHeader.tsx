@@ -15,7 +15,7 @@ export default function SectionHeader({ title, subtitle, description, light = fa
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className={`text-sm font-bold uppercase tracking-widest ${light ? 'text-fire-orange/80' : 'text-fire-orange'}`}
+          className="text-xs font-black uppercase tracking-[0.3em] text-fire-orange mb-4 block"
         >
           {subtitle}
         </motion.span>
@@ -25,7 +25,7 @@ export default function SectionHeader({ title, subtitle, description, light = fa
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className={`text-4xl md:text-5xl font-black mt-4 mb-6 tracking-tight ${light ? 'text-white' : 'text-dark-blue'}`}
+        className="text-4xl md:text-6xl font-black mt-4 mb-8 tracking-tighter text-white uppercase"
       >
         {title}
       </motion.h2>
@@ -35,7 +35,7 @@ export default function SectionHeader({ title, subtitle, description, light = fa
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className={`text-lg leading-relaxed ${light ? 'text-white/70' : 'text-dark-blue/70'}`}
+          className="text-lg leading-relaxed text-white/60 font-medium"
         >
           {description}
         </motion.p>

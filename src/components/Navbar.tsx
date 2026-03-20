@@ -13,7 +13,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-dark-blue/90 backdrop-blur-md text-white border-b border-white/10">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-dark-bg/80 backdrop-blur-xl text-white border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-2">
@@ -21,11 +21,11 @@ export default function Navbar() {
               initial={{ rotate: -10 }}
               animate={{ rotate: 10 }}
               transition={{ repeat: Infinity, duration: 2, repeatType: 'reverse' }}
-              className="w-10 h-10 bg-fire-orange rounded-full flex items-center justify-center shadow-lg shadow-fire-orange/20"
+              className="w-10 h-10 bg-gradient-to-br from-fire-orange to-gold-accent rounded-full flex items-center justify-center shadow-lg shadow-fire-orange/20"
             >
               <Globe className="w-6 h-6 text-white" />
             </motion.div>
-            <span className="text-xl font-black tracking-tighter">ZEMEN <span className="text-fire-orange">CITY</span></span>
+            <span className="text-xl font-black tracking-tighter uppercase">ZEMEN <span className="text-fire-orange">CITY</span></span>
           </div>
 
           <div className="hidden md:block">
@@ -34,14 +34,14 @@ export default function Navbar() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="hover:text-fire-orange px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="hover:text-fire-orange px-3 py-2 rounded-md text-sm font-bold transition-all hover:tracking-widest"
                 >
                   {item.name}
                 </a>
               ))}
-              <button className="bg-fire-orange hover:bg-fire-orange/90 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-all transform hover:scale-105">
+              <button className="bg-fire-orange hover:bg-fire-orange/90 text-white px-6 py-2 rounded-full text-sm font-black flex items-center gap-2 transition-all transform hover:scale-105 glow-button">
                 <Wallet className="w-4 h-4" />
-                Connect SBR
+                SBR WALLET
               </button>
             </div>
           </div>
@@ -62,22 +62,22 @@ export default function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-dark-blue border-b border-white/10"
+          className="md:hidden bg-deep-blue border-b border-white/10"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-white hover:text-fire-orange block px-3 py-2 rounded-md text-base font-medium"
+                className="text-white hover:text-fire-orange block px-3 py-2 rounded-md text-base font-bold"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
               </a>
             ))}
-            <button className="w-full bg-fire-orange text-white px-6 py-3 rounded-md text-base font-bold flex items-center justify-center gap-2 mt-4">
+            <button className="w-full bg-fire-orange text-white px-6 py-3 rounded-md text-base font-black flex items-center justify-center gap-2 mt-4">
               <Wallet className="w-5 h-5" />
-              Connect SBR
+              SBR WALLET
             </button>
           </div>
         </motion.div>

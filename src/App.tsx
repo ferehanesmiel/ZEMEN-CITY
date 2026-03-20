@@ -20,15 +20,67 @@ import { motion } from 'motion/react';
 import { ArrowRight, Wallet, TrendingUp, Heart, Recycle, ShoppingBag, Truck, Search, Globe } from 'lucide-react';
 
 const ECOSYSTEM_APPS: AppInfo[] = [
-  { id: '1', name: 'Smart Market', description: 'Hyper-local e-commerce connecting shops with users through SBR.', icon: 'ShoppingBag', color: '#FF4500' },
-  { id: '2', name: 'Adama Scout', description: 'Crowdsourced city data verification platform with SBR rewards.', icon: 'Search', color: '#4A90E2' },
-  { id: '3', name: 'Runner Link', description: 'On-demand delivery and logistics network for seamless city commerce.', icon: 'Truck', color: '#10B981' },
-  { id: '4', name: 'Blooming Heart', description: 'Transparent social impact platform for traceable donations.', icon: 'Heart', color: '#E02424' },
+  {
+    id: 'market',
+    name: 'Smart Market',
+    description: 'The future of e-commerce. Shop from local vendors with instant SBR payments.',
+    icon: 'ShoppingBag',
+    color: '#ff6a00',
+    category: 'core'
+  },
+  {
+    id: 'scout',
+    name: 'Adama Scout',
+    description: 'City discovery and real-time data. Find the best spots and navigate like a local.',
+    icon: 'Search',
+    color: '#121826',
+    category: 'core'
+  },
+  {
+    id: 'runner',
+    name: 'Runner Link',
+    description: 'Ultra-fast logistics and delivery. Track your orders in real-time across the city.',
+    icon: 'Truck',
+    color: '#ffaa00',
+    category: 'core'
+  },
+  {
+    id: 'heart',
+    name: 'Blooming Heart',
+    description: 'Social impact and donations. Direct support for community projects using SBR.',
+    icon: 'Heart',
+    color: '#ff4444',
+    category: 'core'
+  },
+  {
+    id: 'farm',
+    name: 'Farm Link',
+    description: 'Direct-from-farm marketplace. Connecting local agriculture with urban demand.',
+    icon: 'Sprout',
+    color: '#10b981',
+    category: 'expansion'
+  },
+  {
+    id: 'pharma',
+    name: 'Pharma Link',
+    description: 'Medicine finder and pharmacy network. Essential healthcare at your fingertips.',
+    icon: 'Stethoscope',
+    color: '#3b82f6',
+    category: 'expansion'
+  },
+  {
+    id: 'services',
+    name: 'Service Hub',
+    description: 'Local services marketplace. From repairs to professional consulting.',
+    icon: 'Wrench',
+    color: '#8b5cf6',
+    category: 'expansion'
+  }
 ];
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-dark-bg text-white overflow-x-hidden">
       <Navbar />
       
       <main>
@@ -36,32 +88,17 @@ export default function App() {
         <Hero />
 
         {/* Ecosystem Overview */}
-        <section id="ecosystem" className="py-32 bg-white relative overflow-hidden">
+        <section id="ecosystem" className="py-32 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="The Zemen Ecosystem"
-              title="Four Apps, One Unified Economy"
+              title="Seven Apps, One Unified Economy"
               description="Our modular platform connects every aspect of city life, from commerce to social impact, all powered by a single digital currency."
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-              {/* Connection Arrows (Desktop) */}
-              <div className="hidden lg:block absolute top-1/2 left-0 w-full -translate-y-1/2 -z-10">
-                <div className="flex justify-around items-center px-20">
-                  {[1, 2, 3].map((i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ repeat: Infinity, duration: 2, delay: i * 0.5 }}
-                    >
-                      <ArrowRight className="w-12 h-12 text-fire-orange/20" />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {ECOSYSTEM_APPS.map((app, i) => (
-                <AppCard key={app.id} app={app} index={i} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
+              {ECOSYSTEM_APPS.map((app, index) => (
+                <AppCard key={app.id} app={app} index={index} />
               ))}
             </div>
 
@@ -101,7 +138,7 @@ export default function App() {
         </section>
 
         {/* Wallet System */}
-        <section id="wallet" className="py-32 bg-white">
+        <section id="wallet" className="py-32 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="SBR Digital Currency"
@@ -144,7 +181,7 @@ export default function App() {
         </section>
 
         {/* Business Model */}
-        <section className="py-32 bg-dark-blue/5">
+        <section className="py-32 bg-deep-blue/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="Sustainable Growth"
@@ -174,7 +211,7 @@ export default function App() {
         </section>
 
         {/* Roadmap */}
-        <section className="py-32 bg-white">
+        <section className="py-32 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="The Journey"
@@ -186,7 +223,7 @@ export default function App() {
         </section>
 
         {/* Investor Section */}
-        <section id="investors" className="py-32 bg-dark-blue/5">
+        <section id="investors" className="py-32 bg-deep-blue/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="Investment"
@@ -198,7 +235,7 @@ export default function App() {
         </section>
 
         {/* Admin Dashboard Demo */}
-        <section className="py-32 bg-white">
+        <section className="py-32 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
               subtitle="Transparency"

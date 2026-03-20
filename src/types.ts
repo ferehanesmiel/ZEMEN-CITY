@@ -9,6 +9,7 @@ export interface AppInfo {
   description: string;
   icon: string;
   color: string;
+  category: 'core' | 'expansion';
 }
 
 export interface Product {
@@ -18,6 +19,7 @@ export interface Product {
   shop: string;
   location: string;
   image: string;
+  type: 'market' | 'farm' | 'pharma' | 'service';
 }
 
 export interface Transaction {
