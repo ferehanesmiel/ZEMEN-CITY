@@ -1,9 +1,30 @@
+export type UserRole = 'scout' | 'rider' | 'customer' | 'admin';
+
+export interface UserProfile {
+  uid: string;
+  name: string;
+  phone: string;
+  role: UserRole;
+  walletId: string;
+  createdAt: string;
+}
+
+export type TransactionType = 'earn' | 'spend' | 'donation' | 'conversion';
+
+export interface Wallet {
+  userId: string;
+  balance: number;
+  updatedAt: any;
+}
+
 export interface Transaction {
   id: string;
-  type: 'earn' | 'spend' | 'donate' | 'recycle';
+  userId: string;
+  type: TransactionType;
   amount: number;
   description: string;
-  timestamp: string;
+  timestamp: any;
+  status: 'pending' | 'completed' | 'failed';
 }
 
 export interface AppInfo {

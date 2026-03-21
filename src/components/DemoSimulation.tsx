@@ -22,6 +22,9 @@ import {
 } from 'lucide-react';
 import { useDemo } from '../context/DemoContext';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
+import { useWallet } from '../context/WalletContext';
+import { LogIn } from 'lucide-react';
 
 interface SimulationProps {
   activeApp: string;
@@ -29,6 +32,8 @@ interface SimulationProps {
 
 export function DemoSimulation({ activeApp }: SimulationProps) {
   const { updateBalance, addNotification, setActiveRunners, setTotalDonations } = useDemo();
+  const { user, login } = useAuth();
+  const { wallet, recordTransaction } = useWallet();
   const { addToast } = useToast();
   const [step, setStep] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
@@ -44,8 +49,19 @@ export function DemoSimulation({ activeApp }: SimulationProps) {
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    updateBalance(amount);
-    addNotification(message, type);
+    if (user) {
+      try {
+        await recordTransaction(amount, message, type === 'reward' ? 'earn' : 'spend');
+      } catch (error) {
+        addToast('Transaction failed. Check your connection.', 'error');
+        setIsSimulating(false);
+        return;
+      }
+    } else {
+      updateBalance(amount);
+      addNotification(message, type);
+    }
+    
     addToast(message, type === 'reward' ? 'success' : 'info');
     setStep(prev => prev + 1);
     setIsSimulating(false);
@@ -390,6 +406,26 @@ export function DemoSimulation({ activeApp }: SimulationProps) {
 
   return (
     <div className="relative min-h-[500px]">
+      {!user && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-6 text-center bg-zinc-950/40 backdrop-blur-sm rounded-3xl border border-white/5">
+          <div className="max-w-xs space-y-4">
+            <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-500 mx-auto">
+              <LogIn size={32} />
+            </div>
+            <h3 className="text-xl font-bold text-white">Join the Ecosystem</h3>
+            <p className="text-sm text-zinc-400">
+              Log in to connect your SBR wallet and participate in real-time city activities.
+            </p>
+            <button
+              onClick={login}
+              className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20"
+            >
+              Sign in with Google
+            </button>
+          </div>
+        </div>
+      )}
+
       <AnimatePresence mode="wait">
         <motion.div
           key={activeApp}
@@ -398,6 +434,17 @@ export function DemoSimulation({ activeApp }: SimulationProps) {
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
         >
+          {user && (
+            <div className="mb-4 flex items-center justify-between px-2">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-full border border-emerald-500/20">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Wallet Connected
+              </div>
+              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                Balance: <span className="text-white">{wallet?.balance || 0} SBR</span>
+              </div>
+            </div>
+          )}
           {renderSimulation()}
         </motion.div>
       </AnimatePresence>

@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         request.auth.token.email == "esmielferehan@gmail.com");
+    }
+
+    function hasRole(role) {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'name', 'role', 'walletId']) &&
+             data.uid is string && data.name is string &&
+             data.role in ['scout', 'rider', 'customer', 'admin'];
+    }
+
+    function isValidWallet(data) {
+      return data.keys().hasAll(['userId', 'balanceSBR', 'balanceBirr']) &&
+             data.userId is string && data.balanceSBR is number && data.balanceBirr is number;
+    }
+
+    function isValidTransaction(data) {
+      return data.keys().hasAll(['userId', 'amount', 'type', 'timestamp']) &&
+             data.userId is string && data.amount is number &&
+             data.type in ['reward', 'payment', 'donation', 'conversion'];
+    }
+
+    function isValidPlace(data) {
+      return data.keys().hasAll(['name', 'latitude', 'longitude', 'scoutId']) &&
+             data.name is string && data.latitude is number && data.longitude is number;
+    }
+
+    function isValidDelivery(data) {
+      return data.keys().hasAll(['status', 'customerId', 'pickup', 'destination']) &&
+             data.status in ['pending', 'active', 'completed', 'cancelled'];
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{uid} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(uid) && isValidUser(request.resource.data);
+      allow update: if isOwner(uid) && isValidUser(request.resource.data) && 
+                      request.resource.data.role == resource.data.role; // Role immutable for users
+      allow update: if isAdmin();
+    }
+
+    match /wallets/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid) && isValidWallet(request.resource.data);
+      allow update: if isAdmin(); // Only system/admin can update balances
+    }
+
+    match /transactions/{id} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAdmin(); // Transactions created by system
+    }
+
+    match /places/{id} {
+      allow read: if isAuthenticated();
+      allow create: if hasRole('scout') && isValidPlace(request.resource.data);
+      allow update: if isAdmin() || (hasRole('scout') && resource.data.scoutId == request.auth.uid);
+    }
+
+    match /deliveries/{id} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidDelivery(request.resource.data);
+      allow update: if isAuthenticated(); // Riders can accept, customers can cancel
+    }
+
+    match /products/{id} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || hasRole('admin');
+    }
+
+    match /donations/{id} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+    }
+  }
+}

@@ -1,10 +1,12 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { Globe, Menu, X, Coins, LayoutDashboard, Settings, LogOut } from 'lucide-react';
-import { useDemo } from '../context/DemoContext';
+import { motion, AnimatePresence } from 'motion/react';
+import { Globe, Menu, X, Coins, LogIn, LogOut, User } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useWallet } from '../context/WalletContext';
 
 export function Navbar() {
-  const { balance } = useDemo();
+  const { user, profile, login, logout } = useAuth();
+  const { wallet } = useWallet();
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -29,15 +31,41 @@ export function Navbar() {
             <a href="#" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Ecosystem</a>
             <a href="#" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Business Model</a>
             <a href="#" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Roadmap</a>
-            <a href="#" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Impact</a>
+            <a href="#investor" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Investor View</a>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-white/5 rounded-full">
-              <Coins size={16} className="text-orange-500" />
-              <span className="text-sm font-bold text-white">{balance.toLocaleString()}</span>
-              <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">SBR</span>
-            </div>
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-white/5 rounded-full">
+                  <Coins size={16} className="text-orange-500" />
+                  <span className="text-sm font-bold text-white">{(wallet?.balance || 0).toLocaleString()}</span>
+                  <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">SBR</span>
+                </div>
+                
+                <div className="flex items-center gap-3 pl-4 border-l border-white/10">
+                  <div className="hidden md:block text-right">
+                    <p className="text-xs font-bold text-white leading-none">{profile?.name}</p>
+                    <p className="text-[10px] text-orange-500 uppercase tracking-widest font-bold">{profile?.role}</p>
+                  </div>
+                  <button 
+                    onClick={logout}
+                    className="p-2 text-zinc-500 hover:text-white transition-colors"
+                    title="Logout"
+                  >
+                    <LogOut size={20} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button 
+                onClick={login}
+                className="flex items-center gap-2 px-6 py-2 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.2)]"
+              >
+                <LogIn size={18} />
+                <span>Login</span>
+              </button>
+            )}
             
             <button 
               onClick={() => setIsOpen(!isOpen)}
@@ -62,7 +90,16 @@ export function Navbar() {
               <a href="#" className="block text-lg font-medium text-white/70 hover:text-white">Ecosystem</a>
               <a href="#" className="block text-lg font-medium text-white/70 hover:text-white">Business Model</a>
               <a href="#" className="block text-lg font-medium text-white/70 hover:text-white">Roadmap</a>
-              <a href="#" className="block text-lg font-medium text-white/70 hover:text-white">Impact</a>
+              <a href="#investor" className="block text-lg font-medium text-white/70 hover:text-white">Investor View</a>
+              {!user && (
+                <button 
+                  onClick={login}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-orange-500 text-white font-bold rounded-xl"
+                >
+                  <LogIn size={18} />
+                  <span>Login</span>
+                </button>
+              )}
             </div>
           </motion.div>
         )}
@@ -70,5 +107,3 @@ export function Navbar() {
     </nav>
   );
 }
-
-import { AnimatePresence } from 'motion/react';

@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Central identity for all apps in the ecosystem.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full name" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "role": { "type": "string", "enum": ["scout", "rider", "customer", "admin"], "description": "User role" },
+        "walletId": { "type": "string", "description": "Shared wallet ID" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "role", "walletId"]
+    },
+    "Wallet": {
+      "title": "SBR Wallet",
+      "description": "Shared wallet for SBR and Birr balances.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner's UID" },
+        "balanceSBR": { "type": "number", "description": "SBR balance" },
+        "balanceBirr": { "type": "number", "description": "Birr balance" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "balanceSBR", "balanceBirr"]
+    },
+    "Transaction": {
+      "title": "Transaction Record",
+      "description": "History of all financial activity.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User UID" },
+        "amount": { "type": "number", "description": "Amount in SBR" },
+        "type": { "type": "string", "enum": ["reward", "payment", "donation", "conversion"], "description": "Transaction type" },
+        "description": { "type": "string", "description": "Details of the transaction" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "amount", "type", "timestamp"]
+    },
+    "Place": {
+      "title": "Scout Place",
+      "description": "City data collected by Zemen Scouts.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Place name" },
+        "category": { "type": "string", "description": "Category (shop, landmark, etc.)" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "verified": { "type": "boolean" },
+        "scoutId": { "type": "string", "description": "UID of the scout who added it" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "latitude", "longitude", "scoutId"]
+    },
+    "Delivery": {
+      "title": "Runner Link Delivery",
+      "description": "Logistics and delivery records.",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "active", "completed", "cancelled"] },
+        "riderId": { "type": "string", "description": "UID of the runner" },
+        "customerId": { "type": "string", "description": "UID of the customer" },
+        "pickup": { "type": "string" },
+        "destination": { "type": "string" },
+        "fee": { "type": "number", "description": "Delivery fee in SBR" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["status", "customerId", "pickup", "destination"]
+    },
+    "Product": {
+      "title": "Market Product",
+      "description": "Items available in the Smart Market.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number", "description": "Price in SBR" },
+        "shopId": { "type": "string" },
+        "category": { "type": "string" },
+        "stock": { "type": "integer" }
+      },
+      "required": ["name", "price", "shopId"]
+    },
+    "Donation": {
+      "title": "Blooming Heart Donation",
+      "description": "Social impact contributions.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "amount": { "type": "number", "description": "Amount in SBR" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "projectId", "amount"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": { "schema": "User", "description": "User profiles" },
+    "/wallets/{uid}": { "schema": "Wallet", "description": "User wallets" },
+    "/transactions/{id}": { "schema": "Transaction", "description": "Transaction history" },
+    "/places/{id}": { "schema": "Place", "description": "Verified city locations" },
+    "/deliveries/{id}": { "schema": "Delivery", "description": "Delivery tasks" },
+    "/products/{id}": { "schema": "Product", "description": "Market items" },
+    "/donations/{id}": { "schema": "Donation", "description": "Social impact donations" }
+  }
+}
