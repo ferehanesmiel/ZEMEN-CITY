@@ -1,11 +1,10 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 import { authenticateToken } from "./middleware";
+import { db, auth } from "./firebaseAdmin";
 
 const router = express.Router();
-const db = admin.firestore();
-const auth = admin.auth();
 const JWT_SECRET = process.env.JWT_SECRET || "zemen-digital-city-secret-key-2026";
 
 router.post("/register", async (req, res) => {

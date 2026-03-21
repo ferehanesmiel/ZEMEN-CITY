@@ -1,9 +1,9 @@
 import express from "express";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 import { authenticateToken, authorizeRole } from "./middleware";
+import { db } from "./firebaseAdmin";
 
 const router = express.Router();
-const db = admin.firestore();
 
 // 📦 5️⃣ ORDERS (MARKET → DELIVERY)
 router.post("/create", authenticateToken, async (req: any, res) => {

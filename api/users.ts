@@ -1,9 +1,9 @@
 import express from "express";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 import { authenticateToken, authorizeRole } from "./middleware";
+import { db } from "./firebaseAdmin";
 
 const router = express.Router();
-const db = admin.firestore();
 
 router.get("/:id", authenticateToken, async (req, res) => {
   const userDoc = await db.collection('users').doc(req.params.id).get();

@@ -4,8 +4,6 @@ import path from "path";
 import cors from "cors";
 import { WebSocketServer } from "ws";
 import http from "http";
-import * as admin from "firebase-admin";
-import firebaseConfig from './firebase-applet-config.json' assert { type: 'json' };
 
 // Import routes
 import authRoutes from "./api/auth";
@@ -20,15 +18,6 @@ import donationRoutes from "./api/donations";
 import ratingRoutes from "./api/ratings";
 import notificationRoutes from "./api/notifications";
 import adminRoutes from "./api/admin";
-
-// Initialize Firebase Admin
-if (!admin.apps.length) {
-  admin.initializeApp({
-    projectId: firebaseConfig.projectId,
-  });
-}
-
-const db = admin.firestore();
 
 async function startServer() {
   const app = express();
